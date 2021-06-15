@@ -1,30 +1,30 @@
-import React ,{useEffect}from 'react';
+import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
 import styles from './index.css';
-export default function Shopcart() {
-    const [dispatch,list] = [window.g_app._store.dispatch,window.g_app._store.getState().shopcart.list]
-    useEffect(()=>{
-        getList()
-    },[])
-    function getList(){
-        dispatch({
-            type:"shopcart/getList"
-        })
-    }
-    function changeNum(_id, n){
-        dispatch({
-            type: "shopcart/changeNum",
-            payload: {
-              _id,
-              n,
-            },
-          });
-    }
-    async function del(_id){
-        dispatch({
-            type: "shopcart/del",
-            payload: _id
-          });
-    }
+function Shopcart({dispatch,list}) {
+  useEffect(() => {
+    getList();
+  }, [getList]);
+  function getList() {
+    dispatch({
+      type: 'shopcart/getList',
+    });
+  }
+  function changeNum(_id, n) {
+    dispatch({
+      type: 'shopcart/changeNum',
+      payload: {
+        _id,
+        n,
+      },
+    });
+  }
+  async function del(_id) {
+    dispatch({
+      type: 'shopcart/del',
+      payload: _id,
+    });
+  }
   return (
     <div className={styles.box}>
       <table>
@@ -38,7 +38,7 @@ export default function Shopcart() {
           </tr>
         </thead>
         <tbody>
-        {list.map((item) => {
+          {list.map(item => {
             return (
               <tr key={item._id}>
                 <td>{item.name}</td>
@@ -60,3 +60,9 @@ export default function Shopcart() {
     </div>
   );
 }
+const mapStateToProps = state => {
+  return {
+    list: state.shopcart.list,
+  };
+};
+export default connect(mapStateToProps)(Shopcart);
