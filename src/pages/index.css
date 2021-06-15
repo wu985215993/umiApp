@@ -1,0 +1,14 @@
+
+.box {
+  display: flex;
+}
+
+.leftBox{
+  width: 200px;
+  background-color: pink;
+  height: 400px;
+}
+.rightBox{
+  flex: 1;
+  background-color: tomato;
+}
